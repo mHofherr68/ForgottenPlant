@@ -10,8 +10,8 @@ public class FirstPersonLook : MonoBehaviour
     [SerializeField] private float senseY = 150f;
 
     [Header("Vertical Look Limits")]
-    [SerializeField] private float minLookAngle = -62f;
-    [SerializeField] private float maxLookAngle = 45f;
+    [SerializeField] private float topLookAngle = -62f;
+    [SerializeField] private float bottomLookAngle = 45f;
 
     private InputSystem_Actions controls;
     private Vector2 lookInput;
@@ -53,7 +53,7 @@ public class FirstPersonLook : MonoBehaviour
         float mouseY = lookInput.y * senseY * Time.deltaTime;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, minLookAngle, maxLookAngle);
+        xRotation = Mathf.Clamp(xRotation, topLookAngle, bottomLookAngle);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
