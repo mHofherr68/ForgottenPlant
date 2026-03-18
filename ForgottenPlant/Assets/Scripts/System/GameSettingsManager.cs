@@ -18,7 +18,7 @@ public class GameSettingsManager : MonoBehaviour
     private string settingsFilePath;
     private string checksumFilePath;
 
-    private AudiomixerManager musicPlayer;
+    private AudioMixManager musicPlayer;
 
     public bool HasUnsavedChanges { get; private set; } = false;
 
@@ -36,7 +36,7 @@ public class GameSettingsManager : MonoBehaviour
 
         Instance = this;
 
-        musicPlayer = FindFirstObjectByType<AudiomixerManager>();
+        musicPlayer = FindFirstObjectByType<AudioMixManager>();
 
         folderPath = Path.Combine(
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonDocuments),
@@ -299,7 +299,7 @@ public class GameSettingsManager : MonoBehaviour
     private void ApplyMusic(GameRuntimeSettings settings)
     {
         if (musicPlayer == null)
-            musicPlayer = FindFirstObjectByType<AudiomixerManager>();
+            musicPlayer = FindFirstObjectByType<AudioMixManager>();
 
         if (musicPlayer != null)
             musicPlayer.ApplySettings(settings);

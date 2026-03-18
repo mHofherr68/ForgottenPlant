@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudiomixerManager : MonoBehaviour
+public class AudioMixManager : MonoBehaviour
 {
     [Header("Mixer")]
     [SerializeField] private AudioMixer mainAudioMixer;
