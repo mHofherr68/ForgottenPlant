@@ -1,35 +1,3 @@
-/*using UnityEngine;
-
-public class AudiomixerManager : MonoBehaviour
-{
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip[] tracks;
-
-    private int currentTrackIndex = -1;
-
-    private void Awake()
-    {
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-    }
-
-    public void ApplySettings(GameRuntimeSettings settings)
-    {
-        if (audioSource == null || tracks == null || tracks.Length == 0 || settings == null)
-            return;
-
-        int trackIndex = Mathf.Clamp(settings.trackIndex, 0, tracks.Length - 1);
-
-        if (currentTrackIndex != trackIndex || audioSource.clip != tracks[trackIndex])
-        {
-            currentTrackIndex = trackIndex;
-            audioSource.clip = tracks[trackIndex];
-            audioSource.Play();
-        }
-
-        audioSource.volume = Mathf.Clamp01(settings.musicVolume);
-    }
-}*/
 using UnityEngine;
 using UnityEngine.Audio;
 
