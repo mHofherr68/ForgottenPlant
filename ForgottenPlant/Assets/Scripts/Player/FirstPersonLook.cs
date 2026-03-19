@@ -1,4 +1,5 @@
-using UnityEngine;          // Adapted from PIP2
+using System.Collections;
+using UnityEngine;
 
 public class FirstPersonLook : MonoBehaviour
 {
@@ -17,10 +18,23 @@ public class FirstPersonLook : MonoBehaviour
     private Vector2 lookInput;
     private float xRotation;
 
+    private float baseSenseX;
+    private float baseSenseY;
+
+    private float currentSenseX;
+    private float currentSenseY;
+    private bool invertY;
+
     public float CurrentXRotation => xRotation;
 
     private void Awake()
     {
+        baseSenseX = senseX;
+        baseSenseY = senseY;
+
+        currentSenseX = baseSenseX;
+        currentSenseY = baseSenseY;
+
         controls = new InputSystem_Actions();
 
         controls.Player.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
@@ -40,6 +54,28 @@ public class FirstPersonLook : MonoBehaviour
     private void Start()
     {
         LockCursor();
+        StartCoroutine(ApplyMouseSettingsNextFrame());
+    }
+
+    private IEnumerator ApplyMouseSettingsNextFrame()
+    {
+        yield return null;
+
+        if (GameSettingsManager.Instance == null)
+            yield break;
+
+        ApplyMouseSettings(GameSettingsManager.Instance.LiveSettings.mouseSensitivity,
+                           GameSettingsManager.Instance.LiveSettings.invertY);
+    }
+
+    public void ApplyMouseSettings(float sensitivityOffset, bool invertYSetting)
+    {
+        float multiplier = 1f + sensitivityOffset;
+
+        currentSenseX = baseSenseX * multiplier;
+        currentSenseY = baseSenseY * multiplier;
+
+        invertY = invertYSetting;
     }
 
     private void Update()
@@ -49,8 +85,11 @@ public class FirstPersonLook : MonoBehaviour
 
     private void HandleLookInput()
     {
-        float mouseX = lookInput.x * senseX * Time.deltaTime;
-        float mouseY = lookInput.y * senseY * Time.deltaTime;
+        float mouseX = lookInput.x * currentSenseX * Time.deltaTime;
+        float mouseY = lookInput.y * currentSenseY * Time.deltaTime;
+
+        if (invertY)
+            mouseY *= -1f;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, topLookAngle, bottomLookAngle);

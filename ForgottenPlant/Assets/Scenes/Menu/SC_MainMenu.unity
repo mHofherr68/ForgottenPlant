@@ -6164,9 +6164,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 1008427937}
     m_Modifications:
     - target: {fileID: 1177429387798417730, guid: d0351b57e8c758b4b8fe5b5b0abe28be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177429387798417730, guid: d0351b57e8c758b4b8fe5b5b0abe28be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2127894916}
+    - target: {fileID: 1177429387798417730, guid: d0351b57e8c758b4b8fe5b5b0abe28be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177429387798417730, guid: d0351b57e8c758b4b8fe5b5b0abe28be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177429387798417730, guid: d0351b57e8c758b4b8fe5b5b0abe28be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: SC_Level_01
+      objectReference: {fileID: 0}
     - target: {fileID: 2344028223995802784, guid: d0351b57e8c758b4b8fe5b5b0abe28be, type: 3}
       propertyPath: m_text
       value: Neues Spiel

@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameSettingsManager : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class GameSettingsManager : MonoBehaviour
     private string checksumFilePath;
 
     private AudioMixManager musicPlayer;
+    private FirstPersonLook firstPersonLook;
 
     public bool HasUnsavedChanges { get; private set; } = false;
 
@@ -36,8 +39,6 @@ public class GameSettingsManager : MonoBehaviour
 
         Instance = this;
 
-        musicPlayer = FindFirstObjectByType<AudioMixManager>();
-
         folderPath = Path.Combine(
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonDocuments),
             "ForgottenPlant"
@@ -49,9 +50,38 @@ public class GameSettingsManager : MonoBehaviour
         LoadSettings();
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void Start()
     {
+        StartCoroutine(ApplySettingsNextFrame());
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(ApplySettingsNextFrame());
+    }
+
+    private IEnumerator ApplySettingsNextFrame()
+    {
+        yield return null;
+
+        RefreshSceneReferences();
         ApplySettings(liveSettings);
+    }
+
+    private void RefreshSceneReferences()
+    {
+        musicPlayer = FindFirstObjectByType<AudioMixManager>();
+        firstPersonLook = FindFirstObjectByType<FirstPersonLook>();
     }
 
     public void LoadSettings()
@@ -304,20 +334,26 @@ public class GameSettingsManager : MonoBehaviour
         if (musicPlayer != null)
             musicPlayer.ApplySettings(settings);
     }
-    // New
+
     private void ApplyMouse(GameRuntimeSettings settings)
     {
-        // Later used at Player
-        Debug.Log("ApplyMouse → Sensitivity: " + settings.mouseSensitivity +
-                  " | InvertY: " + settings.invertY);
+        if (firstPersonLook == null)
+            firstPersonLook = FindFirstObjectByType<FirstPersonLook>();
+
+        if (firstPersonLook != null)
+        {
+            firstPersonLook.ApplyMouseSettings(
+                settings.mouseSensitivity,
+                settings.invertY
+            );
+        }
     }
 
     private void ApplyDifficulty(GameRuntimeSettings settings)
     {
-        // Later used in Gameplay
         Debug.Log("ApplyDifficulty → Level: " + settings.difficultyIndex);
     }
-    // ---
+
     private void UpdateUnsavedChangesState()
     {
         HasUnsavedChanges = !AreSettingsEqual(liveSettings, savedSettings);

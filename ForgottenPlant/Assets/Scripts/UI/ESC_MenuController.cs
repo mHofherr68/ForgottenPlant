@@ -1,43 +1,35 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
-public class MainMenuController : MonoBehaviour
+public class ESC_MenuController : MonoBehaviour
 {
-    [Header("Main Menu")]
-    [SerializeField] private GameObject loadMessagePanel;
+    [Header("Message Panel")]
+    [SerializeField] private GameObject messagePanel;
     [SerializeField] private float messageDuration = 2f;
 
-    [Header("Options Menu")]
+    [Header("Options Panel")]
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject onSavePanel;
-
-    [Header("Graphics")]
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
-    [SerializeField] private Slider fullscreenSwitch;
 
     [Header("Audio")]
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
     [SerializeField] private Slider speechVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private TMP_Dropdown trackDropdown;
 
     [Header("Mouse")]
     [SerializeField] private Slider mouseSensitivitySlider;
     [SerializeField] private Slider invertYSwitch;
 
-    [Header("Misc")]
-    [SerializeField] private TMP_Dropdown difficultyDropdown;
-    [SerializeField] private TMP_Dropdown trackDropdown;
-
     private bool isLoadingUI = false;
 
     private void Start()
     {
-        if (loadMessagePanel != null)
-            loadMessagePanel.gameObject.SetActive(false);
+        if (messagePanel != null)
+            messagePanel.SetActive(false);
 
         if (optionsPanel != null)
             optionsPanel.SetActive(false);
@@ -47,11 +39,6 @@ public class MainMenuController : MonoBehaviour
 
         RegisterUIEvents();
         LoadSettingsToUI();
-    }
-
-    public void OnLoadGameClicked()
-    {
-        StartCoroutine(ShowLoadMessage());
     }
 
     public void OpenOptions()
@@ -95,31 +82,43 @@ public class MainMenuController : MonoBehaviour
             optionsPanel.SetActive(false);
     }
 
-    private IEnumerator ShowLoadMessage()
+    public void OnSaveGameClicked()
     {
-        if (loadMessagePanel == null)
-            yield break;
-
-        loadMessagePanel.gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(messageDuration);
-
-        loadMessagePanel.gameObject.SetActive(false);
+        StartCoroutine(ShowMessage());
     }
 
-    public void LoadLevel(string sceneName)
+    public void OnQuitGameClicked()
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        StartCoroutine(ShowMessage());
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        // Pause sauber beenden
+        Time.timeScale = 1f;
+
+        // Cursor wieder freigeben (wichtig fürs MainMenu)
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // Szene laden
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
+    private IEnumerator ShowMessage()
+    {
+        if (messagePanel == null)
+            yield break;
+
+        messagePanel.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(messageDuration);
+
+        messagePanel.SetActive(false);
     }
 
     private void RegisterUIEvents()
     {
-        if (resolutionDropdown != null)
-            resolutionDropdown.onValueChanged.AddListener(_ => OnOptionChanged());
-
-        if (fullscreenSwitch != null)
-            fullscreenSwitch.onValueChanged.AddListener(_ => OnOptionChanged());
-
         if (masterVolumeSlider != null)
             masterVolumeSlider.onValueChanged.AddListener(_ => OnOptionChanged());
 
@@ -132,17 +131,14 @@ public class MainMenuController : MonoBehaviour
         if (musicVolumeSlider != null)
             musicVolumeSlider.onValueChanged.AddListener(_ => OnOptionChanged());
 
+        if (trackDropdown != null)
+            trackDropdown.onValueChanged.AddListener(_ => OnOptionChanged());
+
         if (mouseSensitivitySlider != null)
             mouseSensitivitySlider.onValueChanged.AddListener(_ => OnOptionChanged());
 
         if (invertYSwitch != null)
             invertYSwitch.onValueChanged.AddListener(_ => OnOptionChanged());
-
-        if (difficultyDropdown != null)
-            difficultyDropdown.onValueChanged.AddListener(_ => OnOptionChanged());
-
-        if (trackDropdown != null)
-            trackDropdown.onValueChanged.AddListener(_ => OnOptionChanged());
     }
 
     private void LoadSettingsToUI()
@@ -157,12 +153,6 @@ public class MainMenuController : MonoBehaviour
 
         GameRuntimeSettings settings = GameSettingsManager.Instance.CurrentSettings;
 
-        if (resolutionDropdown != null)
-            resolutionDropdown.value = settings.resolutionIndex;
-
-        if (fullscreenSwitch != null)
-            fullscreenSwitch.value = settings.fullscreen ? 1f : 0f;
-
         if (masterVolumeSlider != null)
             masterVolumeSlider.value = settings.masterVolume;
 
@@ -175,17 +165,14 @@ public class MainMenuController : MonoBehaviour
         if (musicVolumeSlider != null)
             musicVolumeSlider.value = settings.musicVolume;
 
+        if (trackDropdown != null)
+            trackDropdown.value = settings.trackIndex;
+
         if (mouseSensitivitySlider != null)
             mouseSensitivitySlider.value = settings.mouseSensitivity + 0.5f;
 
         if (invertYSwitch != null)
             invertYSwitch.value = settings.invertY ? 1f : 0f;
-
-        if (difficultyDropdown != null)
-            difficultyDropdown.value = settings.difficultyIndex;
-
-        if (trackDropdown != null)
-            trackDropdown.value = settings.trackIndex;
 
         isLoadingUI = false;
     }
@@ -200,12 +187,6 @@ public class MainMenuController : MonoBehaviour
 
         GameRuntimeSettings settings = GameSettingsManager.Instance.LiveSettings;
 
-        if (resolutionDropdown != null)
-            settings.resolutionIndex = resolutionDropdown.value;
-
-        if (fullscreenSwitch != null)
-            settings.fullscreen = fullscreenSwitch.value > 0.5f;
-
         if (masterVolumeSlider != null)
             settings.masterVolume = masterVolumeSlider.value;
 
@@ -218,44 +199,18 @@ public class MainMenuController : MonoBehaviour
         if (musicVolumeSlider != null)
             settings.musicVolume = musicVolumeSlider.value;
 
+        if (trackDropdown != null)
+            settings.trackIndex = trackDropdown.value;
+
         if (mouseSensitivitySlider != null)
             settings.mouseSensitivity = mouseSensitivitySlider.value - 0.5f;
 
         if (invertYSwitch != null)
             settings.invertY = invertYSwitch.value > 0.5f;
 
-        if (difficultyDropdown != null)
-            settings.difficultyIndex = difficultyDropdown.value;
-
-        if (trackDropdown != null)
-            settings.trackIndex = trackDropdown.value;
-
         GameSettingsManager.Instance.ApplyLiveSettings();
 
         if (onSavePanel != null)
             onSavePanel.SetActive(false);
-    }
-
-    private IEnumerator LoadSceneAsync(string sceneName)
-    {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-
-        if (operation == null)
-        {
-            Debug.LogError("Scene could not be loaded.");
-            yield break;
-        }
-
-        while (!operation.isDone)
-            yield return null;
-    }
-
-    public void QuitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-    Application.Quit();
-#endif
     }
 }
