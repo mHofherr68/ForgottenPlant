@@ -7,8 +7,8 @@ public class GameDefaultSettings
     public bool fullscreen = false;
 
     public float masterVolume = 1f;
-    public float sfxVolume = 1f;
-    public float speechVolume = 1f;
+    public float sfxVolume = 0f;
+    public float speechVolume = 0f;
     public float musicVolume = 1f;
 
     public float mouseSensitivity = 0f;

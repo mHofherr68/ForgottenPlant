@@ -1092,7 +1092,7 @@ MonoBehaviour:
   tracks:
   - {fileID: 8300000, guid: 44b3d08e779ff8844bfb39b5a7a26dab, type: 3}
   - {fileID: 8300000, guid: ec1a8d3daa1f8704a8f47c2a2d06029c, type: 3}
-  - {fileID: 8300000, guid: 44b3d08e779ff8844bfb39b5a7a26dab, type: 3}
+  - {fileID: 8300000, guid: f48eda0101e63b14c9e1fc80d7dc1a61, type: 3}
   - {fileID: 8300000, guid: ec1a8d3daa1f8704a8f47c2a2d06029c, type: 3}
 --- !u!82 &335766536
 AudioSource:
@@ -2845,13 +2845,13 @@ MonoBehaviour:
     resolutionIndex: 0
     fullscreen: 0
     masterVolume: 1
-    sfxVolume: 1
-    speechVolume: 1
+    sfxVolume: 0
+    speechVolume: 0
     musicVolume: 1
     mouseSensitivity: 0
     invertY: 0
     difficultyIndex: 1
-    trackIndex: 0
+    trackIndex: 1
   savedSettings:
     resolutionIndex: 0
     fullscreen: 0
@@ -2922,7 +2922,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3643676900354474090, guid: dee10633c5a1c2549aeb9321ea852e7e, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 9a215573fb3a1434b8d73ff43ffa117b, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -3829,7 +3829,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -515399207717123222, guid: dee10633c5a1c2549aeb9321ea852e7e, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 2d0a810ce69ebcd479e5171e904ab1ba, type: 3}
+  m_Resource: {fileID: 8300000, guid: fc13c2bfc2c9b89428910cccd428beed, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
