@@ -866,7 +866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &143713217
 Transform:
   m_ObjectHideFlags: 0
@@ -895,6 +895,7 @@ GameObject:
   - component: {fileID: 152274944}
   - component: {fileID: 152274945}
   - component: {fileID: 152274946}
+  - component: {fileID: 152274947}
   m_Layer: 8
   m_Name: Enemie_01
   m_TagString: Untagged
@@ -910,7 +911,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152274941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 29.1, y: 5.5, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -918,7 +919,7 @@ Transform:
   - {fileID: 682902645}
   - {fileID: 68905103}
   m_Father: {fileID: 1493048058}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &152274944
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -953,8 +954,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2379e1b0456b8394881fb50e9279cdf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyNavMeshPatrol
+  patrolSpeed: 3.5
+  alarmRunSpeed: 10
   patrolRoute: {fileID: 1423648506}
+  detection: {fileID: 152274946}
   pointReachedDistance: 0.25
+  investigateWaitTime: 3
+  suspicionDelay: 4
 --- !u!114 &152274946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,12 +975,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDetection
   player: {fileID: 1968379866}
   eyePoint: {fileID: 68905103}
-  viewDistance: 15
-  viewAngle: 90
+  viewDistance: 35
+  focusViewAngle: 75
+  peripheralViewAngle: 140
   detectionMask:
     serializedVersion: 2
     m_Bits: 200
   debugLogDetection: 1
+  debugDrawGizmos: 1
+--- !u!114 &152274947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152274941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5a90409ec16f94cad54d9242b6686a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAlertResponse
+  detection: {fileID: 152274946}
+  patrol: {fileID: 152274945}
+  reactionMode: 0
+  debugLogReaction: 1
 --- !u!1 &156795334
 GameObject:
   m_ObjectHideFlags: 0
@@ -9562,7 +9586,7 @@ Transform:
   m_GameObject: {fileID: 1351549835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 34.33, y: 6.5, z: -18.09}
+  m_LocalPosition: {x: 33.492, y: 6.5, z: -17.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10727,7 +10751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1484680677
 Transform:
   m_ObjectHideFlags: 0
@@ -11309,6 +11333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17fe81a06cfef24791c67c02d85a743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlarmSystem
+  alarmPoint: {fileID: 1351549836}
 --- !u!4 &1619971333
 Transform:
   m_ObjectHideFlags: 0
@@ -13481,7 +13506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1857604545
 Transform:
   m_ObjectHideFlags: 0
