@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: 63ba5ed16ab83f04d80a72887b8007e0
+guid: fdfc46e70605f6347b052e8d0ca2e5eb
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: BarrelTex
-    second: {fileID: 2100000, guid: c332b8120bfd2f947acc6a6dd3515236, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: BarrelTexture
-    second: {fileID: 2800000, guid: 5f755e2a9b637084b8abee2d9cb75de1, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

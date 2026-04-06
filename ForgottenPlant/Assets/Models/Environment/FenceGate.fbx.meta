@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63ba5ed16ab83f04d80a72887b8007e0
+guid: 399e9c27f1f0b2645844bffdc5236d27
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,13 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: BarrelTex
-    second: {fileID: 2100000, guid: c332b8120bfd2f947acc6a6dd3515236, type: 2}
+      name: FenceFoot_Material
+    second: {fileID: 2100000, guid: b8f31cd35fb1af94e8d17d3b7e17b08f, type: 2}
   - first:
-      type: UnityEngine:Texture2D
+      type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: BarrelTexture
-    second: {fileID: 2800000, guid: 5f755e2a9b637084b8abee2d9cb75de1, type: 3}
+      name: FenceFoot_Material.001
+    second: {fileID: 2100000, guid: b8f31cd35fb1af94e8d17d3b7e17b08f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fence_Material
+    second: {fileID: 2100000, guid: 93e82c3e61f56ae4bbdc80665f8ef7ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rod_Material
+    second: {fileID: 2100000, guid: a4bd6741f1900764d947b6ce7a0e6379, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rod_Material.001
+    second: {fileID: 2100000, guid: a4bd6741f1900764d947b6ce7a0e6379, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
