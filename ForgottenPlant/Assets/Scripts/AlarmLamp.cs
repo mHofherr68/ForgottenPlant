@@ -30,7 +30,6 @@ public class AlarmLamp : MonoBehaviour
 
     private void Update()
     {
-        // 🧪 TEST TRIGGER (nur wenn Wert sich ändert)
         if (testActivate && !lastTestState)
         {
             ActivateAlarmLamp();
@@ -48,7 +47,7 @@ public class AlarmLamp : MonoBehaviour
         if (activeTimer <= 0f)
         {
             DeactivateAlarmLamp();
-            testActivate = false; // Reset im Inspector
+            testActivate = false;
         }
     }
 

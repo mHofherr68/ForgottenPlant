@@ -50,24 +50,6 @@ public class EnemyAlertResponse : MonoBehaviour
         }
     }
 
-    /*private void HandleAlarmThenRun()
-    {
-        if (!detection.CanSeePlayer)
-            return;
-
-        hasReactedToDetection = true;
-
-        if (debugLogReaction)
-            Debug.Log($"{name}: Reaction = AlarmThenRunToAlarmPoint");
-
-        AlarmSystem.Instance?.TriggerAlarm();
-
-        if (patrol != null)
-        {
-            patrol.RunToAlarmPoint();
-        }
-    }*/
-
     private void HandleAlarmThenRun()
     {
         if (!detection.CanSeePlayer)
