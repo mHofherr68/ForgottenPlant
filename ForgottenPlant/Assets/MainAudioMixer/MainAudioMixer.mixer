@@ -72,7 +72,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Speech Volume
+  m_Name: Voice Volume
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: bdf3552b71b316c4dbc65a95520205f7
   m_Children: []
