@@ -963,8 +963,8 @@ GameObject:
   - component: {fileID: 152274942}
   - component: {fileID: 152274944}
   - component: {fileID: 152274947}
-  - component: {fileID: 152274945}
   - component: {fileID: 152274946}
+  - component: {fileID: 152274945}
   - component: {fileID: 152274949}
   - component: {fileID: 152274948}
   m_Layer: 8
@@ -1031,13 +1031,12 @@ MonoBehaviour:
   alarmSlowdownDistance: 6
   patrolRoute: {fileID: 1423648506}
   detection: {fileID: 152274946}
-  voice: {fileID: 0}
+  brain: {fileID: 152274947}
   pointReachedDistance: 0.25
-  investigateWaitTime: 3
-  suspicionDelay: 4
+  investigateWaitTime: 4
+  suspicionDelay: 3
   alarmPointReachedDistance: 1
   debugLogAlarmPoint: 0
-  suspicionVoiceIndex: 0
 --- !u!114 &152274946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,8 +1052,8 @@ MonoBehaviour:
   player: {fileID: 1968379866}
   eyePoint: {fileID: 68905103}
   viewDistance: 35
-  focusViewAngle: 75
-  peripheralViewAngle: 140
+  focusViewAngle: 85
+  peripheralViewAngle: 172
   detectionMask:
     serializedVersion: 2
     m_Bits: 200
@@ -1076,6 +1075,10 @@ MonoBehaviour:
   patrol: {fileID: 152274945}
   reactionMode: 0
   debugLogReaction: 0
+  turnDelay: 1
+  fastTurnDelay: 0.8
+  turnSpeed: 8
+  suspicionResetTime: 8
 --- !u!114 &152274948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1091,6 +1094,7 @@ MonoBehaviour:
   voiceClips:
   - {fileID: 8300000, guid: 807119e2e55203e4f805d712a1187587, type: 3}
   - {fileID: 8300000, guid: 5bd871451865635418407cbc59fbfaaf, type: 3}
+  - {fileID: 8300000, guid: 0036c7a2b50a3c0469864d7822942c29, type: 3}
   randomizePitch: 1
   pitchRange: {x: 0.95, y: 1.05}
   debugLog: 0
@@ -11444,7 +11448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1484680677
 Transform:
   m_ObjectHideFlags: 0

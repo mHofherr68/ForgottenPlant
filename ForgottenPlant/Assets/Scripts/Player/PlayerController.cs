@@ -124,12 +124,7 @@ public class PlayerController : MonoBehaviour
 
         controller.center = new Vector3(0f, controller.height / 2f, 0f);
 
-        // Kamera smooth bewegen
         float targetCamY = IsCrouching ? crouchCameraY : standingCameraY;
-
-        /*Vector3 camLocal = playerCamera.localPosition;
-        camLocal.y = Mathf.Lerp(camLocal.y, targetCamY, crouchSpeed * Time.deltaTime);
-        playerCamera.localPosition = camLocal;*/
     }
 
     private void ToggleCrouch()
