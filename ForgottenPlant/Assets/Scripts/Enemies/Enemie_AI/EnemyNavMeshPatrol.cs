@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyNavMeshPatrol : MonoBehaviour
 {
@@ -46,11 +47,15 @@ public class EnemyNavMeshPatrol : MonoBehaviour
     // Suspicion Delay
     private bool suspicionActive = false;
     private float suspicionTimer = 0f;
-    private bool wasSuspicionDetectedLastFrame = false; // NEW
+    private bool wasSuspicionDetectedLastFrame = false;
+
+    // OffMeshLink
+    private bool isTraversingOffMeshLink = false;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.autoTraverseOffMeshLink = false;
 
         if (detection == null)
             detection = GetComponent<EnemyDetection>();
@@ -71,6 +76,15 @@ public class EnemyNavMeshPatrol : MonoBehaviour
 
     private void Update()
     {
+        if (!isTraversingOffMeshLink && agent.isOnOffMeshLink)
+        {
+            StartCoroutine(TraverseOffMeshLinkRoutine());
+            return;
+        }
+
+        if (isTraversingOffMeshLink)
+            return;
+
         bool hasSuspicionNow = detection != null && detection.HasSuspicion;
 
         // =========================
@@ -166,6 +180,80 @@ public class EnemyNavMeshPatrol : MonoBehaviour
         if (agent.remainingDistance <= pointReachedDistance)
         {
             StartWaiting();
+        }
+    }
+
+    private IEnumerator TraverseOffMeshLinkRoutine()
+    {
+        isTraversingOffMeshLink = true;
+
+        OffMeshLinkData linkData = agent.currentOffMeshLinkData;
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = linkData.endPos + Vector3.up * agent.baseOffset;
+
+        agent.updatePosition = false;
+
+        float traverseSpeed = Mathf.Max(0.01f, agent.speed);
+        float distance = Vector3.Distance(startPos, endPos);
+        float duration = distance / traverseSpeed;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            Vector3 nextPos = Vector3.Lerp(startPos, endPos, t);
+            transform.position = nextPos;
+
+            Vector3 flatDir = endPos - transform.position;
+            flatDir.y = 0f;
+            if (flatDir.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(flatDir.normalized);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * 10f);
+            }
+
+            yield return null;
+        }
+
+        transform.position = endPos;
+
+        agent.CompleteOffMeshLink();
+        agent.updatePosition = true;
+        agent.Warp(transform.position);
+
+        ResumeCurrentMovementState();
+
+        isTraversingOffMeshLink = false;
+    }
+
+    private void ResumeCurrentMovementState()
+    {
+        if (isRunningToAlarmPoint)
+        {
+            if (AlarmSystem.Instance != null && AlarmSystem.Instance.AlarmPoint != null)
+            {
+                agent.SetDestination(AlarmSystem.Instance.AlarmPoint.position);
+            }
+
+            return;
+        }
+
+        if (isInvestigating)
+        {
+            if (detection != null)
+            {
+                agent.SetDestination(detection.LastKnownPlayerPosition);
+            }
+
+            return;
+        }
+
+        if (patrolRoute != null && patrolRoute.Count > 0 && !isWaiting)
+        {
+            MoveToPoint(currentIndex);
         }
     }
 

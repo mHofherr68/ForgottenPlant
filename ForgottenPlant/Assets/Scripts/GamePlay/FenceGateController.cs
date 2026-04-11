@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using Unity.AI.Navigation;
 using UnityEngine;
+//using UnityEngine.AI;
 
 public class FenceGateController : MonoBehaviour
 {
@@ -25,6 +27,12 @@ public class FenceGateController : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource gateAudioSource;
     [SerializeField] private AudioClip impactClip;
+
+    [Header("Collider")]
+    [SerializeField] private Collider gateCollider;
+
+    [Header("NavMesh Link")]
+    [SerializeField] private NavMeshLink navMeshLink;
 
     [Header("Test")]
     [SerializeField] private bool testTrigger = false;
@@ -55,6 +63,15 @@ public class FenceGateController : MonoBehaviour
 
         startPosition = transform.localPosition;
         targetRotation = GetTargetRotation();
+
+        if (gateCollider == null)
+            gateCollider = GetComponent<Collider>();
+
+        if (navMeshLink == null)
+            navMeshLink = GetComponent<NavMeshLink>();
+
+        if (navMeshLink != null)
+            navMeshLink.enabled = false;
     }
 
     private void Update()
@@ -139,6 +156,12 @@ public class FenceGateController : MonoBehaviour
 
         PlayImpactSound();
 
+        if (gateCollider != null)
+            gateCollider.enabled = false;
+
+        if (navMeshLink != null)
+            navMeshLink.enabled = true;
+
         isFalling = false;
 
         if (debugLog)
@@ -165,6 +188,12 @@ public class FenceGateController : MonoBehaviour
         );
 
         targetRotation = GetTargetRotation();
+
+        if (gateCollider != null)
+            gateCollider.enabled = true;
+
+        if (navMeshLink != null)
+            navMeshLink.enabled = false;
 
         isTriggered = false;
         isFalling = false;

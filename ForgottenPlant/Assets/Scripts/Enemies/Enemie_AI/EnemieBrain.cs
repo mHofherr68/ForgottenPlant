@@ -198,6 +198,26 @@ public class EnemieBrain : MonoBehaviour
             patrol.RunToAlarmPoint();
     }
 
+    public void ForceImmediateAlarm(Vector3 playerPosition)
+    {
+        if (hasReactedToDetection)
+            return;
+
+        hasReactedToDetection = true;
+
+        if (debugLogReaction)
+            Debug.Log($"{name}: CONTACT → IMMEDIATE ALARM");
+
+        if (voice != null && !hasPlayedAlarmVoice)
+        {
+            voice.PlayVoice(AlarmVoiceIndex);
+            hasPlayedAlarmVoice = true;
+        }
+
+        if (patrol != null)
+            patrol.RunToAlarmPoint();
+    }
+
     private void HandleAttackImmediately()
     {
         if (!detection.CanSeePlayer)
