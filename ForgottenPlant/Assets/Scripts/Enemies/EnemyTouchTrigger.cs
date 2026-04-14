@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyTouchTrigger : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EnemieBrain enemieBrain;
+    [SerializeField] private EnemyBrain enemieBrain;
 
     [Header("Debug")]
     [SerializeField] private bool debugLogTouch = true;
@@ -11,12 +11,12 @@ public class EnemyTouchTrigger : MonoBehaviour
     private void Awake()
     {
         if (enemieBrain == null)
-            enemieBrain = GetComponentInParent<EnemieBrain>();
+            enemieBrain = GetComponentInParent<EnemyBrain>();
     }
 
     private void Reset()
     {
-        enemieBrain = GetComponentInParent<EnemieBrain>();
+        enemieBrain = GetComponentInParent<EnemyBrain>();
     }
 
     private void OnTriggerEnter(Collider other)
