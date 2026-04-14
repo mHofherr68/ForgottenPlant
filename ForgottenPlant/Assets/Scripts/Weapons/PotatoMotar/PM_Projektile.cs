@@ -1,93 +1,129 @@
-/*using UnityEngine;
+ï»¿//using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Collider))]
-public class PM_Projectile : MonoBehaviour
-{
-    [Header("Projectile Settings")]
-    [SerializeField] private float speed = 25f;
-    [SerializeField] private float lifeTime = 5f;
+//[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Collider))]
+//public class PM_Projectile : MonoBehaviour
+//{
+//    [Header("Projectile Settings")]
+//    [SerializeField] private float speed = 25f;
+//    [SerializeField] private float lifeTime = 5f;
 
-    [Header("Hit Settings")]
-    [SerializeField] private LayerMask hitMask;
+//    [Header("Hit Settings")]
+//    [SerializeField] private LayerMask hitMask;
 
-    [Header("Debug")]
-    [SerializeField] private bool debugLogHits = true;
+//    [Header("Debug")]
+//    [SerializeField] private bool debugLogHits = true;
 
-    private Rigidbody rb;
-    private Collider ownCollider;
-    private GameObject owner;
+//    [Header("Projectile VFX")]
+//    [SerializeField] private GameObject impactVfxPrefab;
+//    [SerializeField] private float impactOffset = 0.02f;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        ownCollider = GetComponent<Collider>();
+//    private Rigidbody rb;
+//    private Collider ownCollider;
+//    private GameObject owner;
 
-        rb.useGravity = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
+//    private void Awake()
+//    {
+//        rb = GetComponent<Rigidbody>();
+//        ownCollider = GetComponent<Collider>();
 
-        if (!ownCollider.isTrigger)
-        {
-            Debug.LogWarning($"{name}: Collider should use 'Is Trigger' for this projectile setup.");
-        }
-    }
+//        rb.useGravity = false;
+//        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+//        rb.interpolation = RigidbodyInterpolation.Interpolate;
 
-    private void Start()
-    {
-        rb.linearVelocity = transform.forward * speed;
-        Destroy(gameObject, lifeTime);
-    }
+//        if (!ownCollider.isTrigger)
+//        {
+//            Debug.LogWarning($"{name}: Collider should use 'Is Trigger' for this projectile setup.");
+//        }
+//    }
 
-    public void Initialize(GameObject projectileOwner)
-    {
-        owner = projectileOwner;
+//    private void Start()
+//    {
+//        rb.linearVelocity = transform.forward * speed;
+//        Destroy(gameObject, lifeTime);
+//    }
 
-        if (owner == null)
-            return;
+//    public void Initialize(GameObject projectileOwner)
+//    {
+//        owner = projectileOwner;
 
-        Collider ownerCollider = owner.GetComponent<Collider>();
-        if (ownerCollider == null)
-            ownerCollider = owner.GetComponentInChildren<Collider>();
+//        if (owner == null)
+//            return;
 
-        if (ownerCollider != null)
-        {
-            Physics.IgnoreCollision(ownCollider, ownerCollider);
-        }
-    }
+//        Collider ownerCollider = owner.GetComponent<Collider>();
+//        if (ownerCollider == null)
+//            ownerCollider = owner.GetComponentInChildren<Collider>();
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other == null)
-            return;
+//        if (ownerCollider != null)
+//        {
+//            Physics.IgnoreCollision(ownCollider, ownerCollider);
+//        }
+//    }
 
-        if (owner != null)
-        {
-            if (other.gameObject == owner || other.transform.IsChildOf(owner.transform))
-                return;
-        }
+//    private void OnTriggerEnter(Collider other)
+//    {
+//        if (other == null)
+//            return;
 
-        if (!IsLayerInMask(other.gameObject.layer, hitMask))
-            return;
+//        if (owner != null)
+//        {
+//            if (other.gameObject == owner || other.transform.IsChildOf(owner.transform))
+//                return;
+//        }
 
-        if (debugLogHits)
-        {
-            Debug.Log($"{name}: Hit {other.name} on layer '{LayerMask.LayerToName(other.gameObject.layer)}'");
-        }
+//        if (!IsLayerInMask(other.gameObject.layer, hitMask))
+//            return;
 
-        // Später hier:
-        // - VFX / Verpuffung
-        // - Damage
-        // - Sound
+//        if (debugLogHits)
+//        {
+//            Debug.Log($"{name}: Hit {other.name} on layer '{LayerMask.LayerToName(other.gameObject.layer)}'");
+//        }
 
-        Destroy(gameObject);
-    }
+//        SpawnImpactVfx(other);
 
-    private bool IsLayerInMask(int layer, LayerMask mask)
-    {
-        return (mask.value & (1 << layer)) != 0;
-    }
-}*/
+//        // SpÃ¤ter hier:
+//        // - Damage
+//        // - Sound
+
+//        Destroy(gameObject);
+//    }
+
+//    private void SpawnImpactVfx(Collider other)
+//    {
+//        if (impactVfxPrefab == null)
+//            return;
+
+//        Vector3 direction = rb.linearVelocity.sqrMagnitude > 0.001f
+//            ? rb.linearVelocity.normalized
+//            : transform.forward;
+
+//        Vector3 rayStart = transform.position - direction * 0.1f;
+//        Vector3 spawnPosition = transform.position;
+//        Quaternion spawnRotation = Quaternion.LookRotation(-direction);
+
+//        if (Physics.Raycast(
+//            rayStart,
+//            direction,
+//            out RaycastHit hit,
+//            1.0f,
+//            ~0,
+//            QueryTriggerInteraction.Ignore))
+//        {
+//            if (hit.collider == other || hit.transform.IsChildOf(other.transform))
+//            {
+//                spawnPosition = hit.point + hit.normal * impactOffset;
+//                spawnRotation = Quaternion.LookRotation(hit.normal);
+//            }
+//        }
+
+//        Instantiate(impactVfxPrefab, spawnPosition, spawnRotation);
+//    }
+
+//    private bool IsLayerInMask(int layer, LayerMask mask)
+//    {
+//        return (mask.value & (1 << layer)) != 0;
+//    }
+//}
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -97,6 +133,9 @@ public class PM_Projectile : MonoBehaviour
     [Header("Projectile Settings")]
     [SerializeField] private float speed = 25f;
     [SerializeField] private float lifeTime = 5f;
+
+    [Header("Damage")]
+    [SerializeField] private int projectileDamage = 1;
 
     [Header("Hit Settings")]
     [SerializeField] private LayerMask hitMask;
@@ -111,6 +150,7 @@ public class PM_Projectile : MonoBehaviour
     private Rigidbody rb;
     private Collider ownCollider;
     private GameObject owner;
+    private bool hasHit = false;
 
     private void Awake()
     {
@@ -140,40 +180,46 @@ public class PM_Projectile : MonoBehaviour
         if (owner == null)
             return;
 
-        Collider ownerCollider = owner.GetComponent<Collider>();
-        if (ownerCollider == null)
-            ownerCollider = owner.GetComponentInChildren<Collider>();
+        Collider[] ownerColliders = owner.GetComponentsInChildren<Collider>();
 
-        if (ownerCollider != null)
+        foreach (Collider col in ownerColliders)
         {
-            Physics.IgnoreCollision(ownCollider, ownerCollider);
+            if (col != null)
+            {
+                Physics.IgnoreCollision(ownCollider, col);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (hasHit)
+            return;
+
         if (other == null)
             return;
 
-        if (owner != null)
-        {
-            if (other.gameObject == owner || other.transform.IsChildOf(owner.transform))
-                return;
-        }
+        // Nur Owner selbst ignorieren, nicht die ganze Parent-Hierarchie
+        if (owner != null && other.gameObject == owner)
+            return;
 
         if (!IsLayerInMask(other.gameObject.layer, hitMask))
             return;
+
+        hasHit = true;
 
         if (debugLogHits)
         {
             Debug.Log($"{name}: Hit {other.name} on layer '{LayerMask.LayerToName(other.gameObject.layer)}'");
         }
 
-        SpawnImpactVfx(other);
+        EnemyHealthController enemyHealth = other.GetComponentInParent<EnemyHealthController>();
+        if (enemyHealth != null)
+        {
+            enemyHealth.TakeDamage(projectileDamage);
+        }
 
-        // Später hier:
-        // - Damage
-        // - Sound
+        SpawnImpactVfx(other);
 
         Destroy(gameObject);
     }

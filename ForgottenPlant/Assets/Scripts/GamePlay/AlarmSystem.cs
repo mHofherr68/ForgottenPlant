@@ -9,7 +9,7 @@ public class AlarmSystem : MonoBehaviour
     [SerializeField] private Transform alarmPoint;
 
     [Header("Alarm Effects")]
-    [SerializeField] private AlarmLamp[] alarmLamps;
+    [SerializeField] private AlarmLamp alarmLamp;
     [SerializeField] private FenceGateController entranceGate;
 
     [Header("Timing")]
@@ -47,7 +47,7 @@ public class AlarmSystem : MonoBehaviour
 
     private IEnumerator AlarmRoutine()
     {
-        ActivateAlarmLamps();
+        ActivateAlarmLamp();
 
         if (gateDelay > 0f)
             yield return new WaitForSeconds(gateDelay);
@@ -61,20 +61,14 @@ public class AlarmSystem : MonoBehaviour
         }
     }
 
-    private void ActivateAlarmLamps()
+    private void ActivateAlarmLamp()
     {
-        if (alarmLamps == null || alarmLamps.Length == 0)
+        if (alarmLamp == null)
             return;
 
-        foreach (AlarmLamp lamp in alarmLamps)
-        {
-            if (lamp == null)
-                continue;
-
-            lamp.ActivateAlarmLamp();
-        }
+        alarmLamp.ActivateAlarmLamp();
 
         if (debugLog)
-            Debug.Log("AlarmSystem: Alarm lamps activated.");
+            Debug.Log("AlarmSystem: Alarm lamp activated.");
     }
 }

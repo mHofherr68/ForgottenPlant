@@ -213,5 +213,7 @@ MonoBehaviour:
   fallYOffset: 0.18
   gateAudioSource: {fileID: 7013284650655975659}
   impactClip: {fileID: 8300000, guid: 3385ef9942ed8ea458d82a5dec498176, type: 3}
+  gateCollider: {fileID: 3044303765128194340}
+  navMeshLink: {fileID: 0}
   testTrigger: 0
   debugLog: 0
