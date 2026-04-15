@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8b073d5f70faec940bdecf1347cd6cc2, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -215,5 +215,11 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: 3385ef9942ed8ea458d82a5dec498176, type: 3}
   gateCollider: {fileID: 3044303765128194340}
   navMeshLink: {fileID: 0}
+  standingLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  fallenLayer:
+    serializedVersion: 2
+    m_Bits: 64
   testTrigger: 0
   debugLog: 0

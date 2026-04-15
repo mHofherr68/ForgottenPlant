@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Unity.AI.Navigation;
 using UnityEngine;
-//using UnityEngine.AI;
 
 public class FenceGateController : MonoBehaviour
 {
@@ -33,6 +32,10 @@ public class FenceGateController : MonoBehaviour
 
     [Header("NavMesh Link")]
     [SerializeField] private NavMeshLink navMeshLink;
+
+    [Header("Layer Switch")]
+    [SerializeField] private LayerMask standingLayer;
+    [SerializeField] private LayerMask fallenLayer;
 
     [Header("Test")]
     [SerializeField] private bool testTrigger = false;
@@ -72,6 +75,8 @@ public class FenceGateController : MonoBehaviour
 
         if (navMeshLink != null)
             navMeshLink.enabled = false;
+
+        SetLayerRecursively(gameObject, GetFirstLayerFromMask(standingLayer));
     }
 
     private void Update()
@@ -130,8 +135,6 @@ public class FenceGateController : MonoBehaviour
             elapsed += Time.deltaTime;
 
             float t = Mathf.Clamp01(elapsed / fallDuration);
-
-            // langsam starten, dann schneller werden
             float easedT = t * t;
 
             transform.localRotation = Quaternion.Lerp(currentStartRot, targetRotation, easedT);
@@ -162,6 +165,8 @@ public class FenceGateController : MonoBehaviour
         if (navMeshLink != null)
             navMeshLink.enabled = true;
 
+        SetLayerRecursively(gameObject, GetFirstLayerFromMask(fallenLayer));
+
         isFalling = false;
 
         if (debugLog)
@@ -176,29 +181,29 @@ public class FenceGateController : MonoBehaviour
         gateAudioSource.PlayOneShot(impactClip);
     }
 
-    public void ResetGate()
+    private void SetLayerRecursively(GameObject targetObject, int targetLayer)
     {
-        StopAllCoroutines();
+        if (targetLayer < 0)
+            return;
 
-        transform.localRotation = startRotation;
-        transform.localPosition = new Vector3(
-            startPosition.x,
-            baseY,
-            startPosition.z
-        );
+        targetObject.layer = targetLayer;
 
-        targetRotation = GetTargetRotation();
+        foreach (Transform child in targetObject.transform)
+        {
+            SetLayerRecursively(child.gameObject, targetLayer);
+        }
+    }
 
-        if (gateCollider != null)
-            gateCollider.enabled = true;
+    private int GetFirstLayerFromMask(LayerMask mask)
+    {
+        int maskValue = mask.value;
 
-        if (navMeshLink != null)
-            navMeshLink.enabled = false;
+        for (int i = 0; i < 32; i++)
+        {
+            if ((maskValue & (1 << i)) != 0)
+                return i;
+        }
 
-        isTriggered = false;
-        isFalling = false;
-
-        if (debugLog)
-            Debug.Log($"{name}: Gate reset.");
+        return -1;
     }
 }
