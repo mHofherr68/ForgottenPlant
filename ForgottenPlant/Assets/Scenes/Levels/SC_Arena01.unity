@@ -1046,7 +1046,7 @@ MonoBehaviour:
   alarmRunSpeed: 10
   alarmApproachSpeed: 2.5
   alarmSlowdownDistance: 6
-  patrolRoute: {fileID: 1267194218}
+  patrolRoute: {fileID: 0}
   detection: {fileID: 152274946}
   brain: {fileID: 152274947}
   homePos: {fileID: 1682270215}
@@ -1235,6 +1235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dad97479c58261478f98f1a3bcd7f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthController
+  enemyBrain: {fileID: 0}
   maxHealth: 100
   healthBarFill: {fileID: 471420318}
   deathVfxPrefab: {fileID: 0}
@@ -8653,10 +8654,10 @@ MonoBehaviour:
   mainAudioMixer: {fileID: 24100000, guid: dee10633c5a1c2549aeb9321ea852e7e, type: 2}
   musicSource: {fileID: 0}
   tracks:
-  - {fileID: 8300000, guid: 44b3d08e779ff8844bfb39b5a7a26dab, type: 3}
   - {fileID: 8300000, guid: ec1a8d3daa1f8704a8f47c2a2d06029c, type: 3}
-  - {fileID: 8300000, guid: f48eda0101e63b14c9e1fc80d7dc1a61, type: 3}
-  - {fileID: 8300000, guid: ec1a8d3daa1f8704a8f47c2a2d06029c, type: 3}
+  - {fileID: 8300000, guid: 0b22665f2d373b44891b75c9571fa528, type: 3}
+  - {fileID: 8300000, guid: a5856a5632d0a1e4182ad111afa9c021, type: 3}
+  - {fileID: 8300000, guid: 8289de9451f848c42ae40982f50f914d, type: 3}
 --- !u!82 &1067389717
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9586,7 +9587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1190836088
 Transform:
   m_ObjectHideFlags: 0
@@ -12323,7 +12324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1484680677
 Transform:
   m_ObjectHideFlags: 0
@@ -12333,7 +12334,7 @@ Transform:
   m_GameObject: {fileID: 1484680676}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.33, y: 4.89, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18344,6 +18345,10 @@ PrefabInstance:
       propertyPath: navMeshLink
       value: 
       objectReference: {fileID: 1364456596}
+    - target: {fileID: 630193244411802035, guid: 5616a6644905b2340b236ba502c34678, type: 3}
+      propertyPath: testTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7169031065501221663, guid: 5616a6644905b2340b236ba502c34678, type: 3}
       propertyPath: m_Name
       value: EntranceFenceGate
@@ -18637,7 +18642,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 974162885}
   - {fileID: 1735416287}
   - {fileID: 1698541156}
   - {fileID: 1493048058}
@@ -18645,6 +18649,7 @@ SceneRoots:
   - {fileID: 1596984012}
   - {fileID: 1454979511}
   - {fileID: 1557922537}
+  - {fileID: 974162885}
   - {fileID: 249032360}
   - {fileID: 195132720}
   - {fileID: 1372150430}

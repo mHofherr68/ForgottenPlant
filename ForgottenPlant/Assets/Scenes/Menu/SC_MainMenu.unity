@@ -1090,10 +1090,10 @@ MonoBehaviour:
   mainAudioMixer: {fileID: 24100000, guid: dee10633c5a1c2549aeb9321ea852e7e, type: 2}
   musicSource: {fileID: 0}
   tracks:
-  - {fileID: 8300000, guid: 44b3d08e779ff8844bfb39b5a7a26dab, type: 3}
   - {fileID: 8300000, guid: ec1a8d3daa1f8704a8f47c2a2d06029c, type: 3}
-  - {fileID: 8300000, guid: f48eda0101e63b14c9e1fc80d7dc1a61, type: 3}
-  - {fileID: 8300000, guid: ec1a8d3daa1f8704a8f47c2a2d06029c, type: 3}
+  - {fileID: 8300000, guid: 0b22665f2d373b44891b75c9571fa528, type: 3}
+  - {fileID: 8300000, guid: a5856a5632d0a1e4182ad111afa9c021, type: 3}
+  - {fileID: 8300000, guid: 8289de9451f848c42ae40982f50f914d, type: 3}
 --- !u!82 &335766536
 AudioSource:
   m_ObjectHideFlags: 0
