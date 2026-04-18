@@ -8,6 +8,9 @@ public class PotatoMortarController : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Camera playerCamera;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip shootClip;
+
     [Header("Shoot Settings")]
     [SerializeField] private float shotCooldown = 0.6f;
     [SerializeField] private float maxAimDistance = 100f;
@@ -18,6 +21,7 @@ public class PotatoMortarController : MonoBehaviour
     [SerializeField] private bool debugDrawShotRay = false;
 
     private float nextShotTime = 0f;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -30,6 +34,8 @@ public class PotatoMortarController : MonoBehaviour
 
         if (playerCamera == null)
             playerCamera = Camera.main;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -93,6 +99,11 @@ public class PotatoMortarController : MonoBehaviour
         if (projectile != null)
         {
             projectile.Initialize(transform.root.gameObject);
+        }
+
+        if (audioSource != null && shootClip != null)
+        {
+            audioSource.PlayOneShot(shootClip);
         }
 
         nextShotTime = Time.time + shotCooldown;
