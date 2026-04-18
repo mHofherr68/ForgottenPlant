@@ -1087,7 +1087,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 152274941}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1116,6 +1116,7 @@ MonoBehaviour:
   alarmRunSpeed: 10
   alarmApproachSpeed: 2.5
   alarmSlowdownDistance: 6
+  alarmEnemyMinDistance: 6
   patrolRoute: {fileID: 1267194218}
   detection: {fileID: 152274946}
   brain: {fileID: 152274947}
@@ -1165,7 +1166,7 @@ MonoBehaviour:
   detection: {fileID: 152274946}
   patrol: {fileID: 152274945}
   playerController: {fileID: 1968379864}
-  reactionMode: 0
+  reactionMode: 1
   debugLogReaction: 0
   turnDelay: 1.5
   fastTurnDelay: 1
@@ -8851,6 +8852,7 @@ MonoBehaviour:
   alarmRunSpeed: 10
   alarmApproachSpeed: 2.5
   alarmSlowdownDistance: 6
+  alarmEnemyMinDistance: 6
   patrolRoute: {fileID: 1941406152}
   detection: {fileID: 997542161}
   brain: {fileID: 997542159}
@@ -9056,7 +9058,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 997542157}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
