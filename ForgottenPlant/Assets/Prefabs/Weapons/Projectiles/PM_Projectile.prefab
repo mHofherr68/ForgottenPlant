@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -156,11 +156,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PM_Projectile
   speed: 25
   lifeTime: 5
-  projectileDamage: 20
+  inheritedVelocityIntensity: 1.3
+  projectileDamage: 5
   hitMask:
     serializedVersion: 2
     m_Bits: 328
-  debugLogHits: 1
+  nearImpactRadius: 20
+  debugLogHits: 0
+  debugLogNearImpact: 0
   impactVfxPrefab: {fileID: 2555970845118997521, guid: 0dad43a83ced333478c02a82778e6e03, type: 3}
   impactOffset: 0.02
   impactClip: {fileID: 8300000, guid: acff0f54bb3222a44a8e328c799f4a15, type: 3}

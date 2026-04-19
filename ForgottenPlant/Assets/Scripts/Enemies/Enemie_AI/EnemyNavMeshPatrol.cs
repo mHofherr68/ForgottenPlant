@@ -1598,3 +1598,4 @@ public class EnemyNavMeshPatrol : MonoBehaviour
         agent.SetDestination(AlarmSystem.Instance.AlarmPoint.position);
     }
 }
+
