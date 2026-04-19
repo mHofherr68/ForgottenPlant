@@ -160,7 +160,7 @@ MonoBehaviour:
   projectileDamage: 5
   hitMask:
     serializedVersion: 2
-    m_Bits: 328
+    m_Bits: 456
   nearImpactRadius: 20
   debugLogHits: 0
   debugLogNearImpact: 0
