@@ -194,7 +194,7 @@ public class EnemyWeaponController : MonoBehaviour
             shotRotation
         );
 
-        PM_Projectile projectile = projectileInstance.GetComponent<PM_Projectile>();
+        ProjectileController projectile = projectileInstance.GetComponent<ProjectileController>();
         if (projectile != null)
         {
             projectile.Initialize(transform.root.gameObject, Vector3.zero);
