@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/SC_Arena01.unity
     guid: b4da22bddde45984ab67d894a78f3b21
+  - enabled: 1
+    path: Assets/Scenes/GameOver/SC_GameOver.unity
+    guid: 3b4f56ddf0cff1d4caa682c6fb9b962d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

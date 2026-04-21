@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9054095112677329652}
   - component: {fileID: 1374497696443409664}
   m_Layer: 0
-  m_Name: Potato_Projectile
+  m_Name: En_Potato_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
   projectileDamage: 5
   hitMask:
     serializedVersion: 2
-    m_Bits: 456
+    m_Bits: 200
   nearImpactRadius: 20
   debugLogHits: 0
   debugLogNearImpact: 0
