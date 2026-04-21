@@ -21,7 +21,6 @@ public class EnemyHealthController : MonoBehaviour
 
     private int currentHealth;
     private bool isDead = false;
-    private bool hasTriggeredHitReaction = false;
 
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
@@ -47,14 +46,9 @@ public class EnemyHealthController : MonoBehaviour
         if (damage <= 0)
             return;
 
-        if (!hasTriggeredHitReaction)
+        if (enemyBrain != null)
         {
-            hasTriggeredHitReaction = true;
-
-            if (enemyBrain != null)
-            {
-                enemyBrain.ForceImmediateAlarm();
-            }
+            enemyBrain.OnDirectHit(transform.position);
         }
 
         currentHealth -= damage;
