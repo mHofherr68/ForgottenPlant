@@ -1,78 +1,3 @@
-//using UnityEngine;
-
-//[RequireComponent(typeof(AudioSource))]
-//public class EnemyVoice : MonoBehaviour
-//{
-//    [Header("Voice Clips (Index-based)")]
-//    [SerializeField] private AudioClip[] voiceClips;
-
-//    [Header("Settings")]
-//    [SerializeField] private bool randomizePitch = true;
-//    [SerializeField] private Vector2 pitchRange = new Vector2(0.95f, 1.05f);
-
-//    [Header("Debug")]
-//    [SerializeField] private bool debugLog = false;
-
-//    private AudioSource audioSource;
-
-//    private void Awake()
-//    {
-//        audioSource = GetComponent<AudioSource>();
-//    }
-
-//    public void PlayVoice(int index)
-//    {
-//        if (voiceClips == null || voiceClips.Length == 0)
-//        {
-//            if (debugLog)
-//                Debug.LogWarning($"{name}: No voice clips assigned.");
-//            return;
-//        }
-
-//        if (index < 0 || index >= voiceClips.Length)
-//        {
-//            if (debugLog)
-//                Debug.LogWarning($"{name}: Voice index {index} out of range.");
-//            return;
-//        }
-
-//        AudioClip clip = voiceClips[index];
-
-//        if (clip == null)
-//        {
-//            if (debugLog)
-//                Debug.LogWarning($"{name}: Voice clip at index {index} is null.");
-//            return;
-//        }
-
-//        // Monophones Verhalten:
-//        // neuer Voice-Clip schneidet den alten sofort ab
-//        if (audioSource.isPlaying)
-//            audioSource.Stop();
-
-//        if (randomizePitch)
-//            audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
-//        else
-//            audioSource.pitch = 1f;
-
-//        audioSource.clip = clip;
-//        audioSource.Play();
-
-//        if (debugLog)
-//            Debug.Log($"{name}: Playing voice index {index}");
-//    }
-
-//    public void StopVoice()
-//    {
-//        if (audioSource == null)
-//            return;
-
-//        if (audioSource.isPlaying)
-//            audioSource.Stop();
-//    }
-
-//    public bool IsPlaying => audioSource != null && audioSource.isPlaying;
-//}
 using System.Collections;
 using UnityEngine;
 
@@ -82,30 +7,43 @@ public class EnemyVoice : MonoBehaviour
     [System.Serializable]
     public class VoiceEntry
     {
+        // Audio clip that should be played for this voice entry.
         public AudioClip clip;
+
+        // Optional delay before the clip starts playing.
         public float startDelay = 0f;
     }
 
     [Header("Voice Clips (Index-based)")]
+    // List of voice entries accessed by index.
     [SerializeField] private VoiceEntry[] voiceClips;
 
     [Header("Settings")]
+    // Enables slight random pitch variation for more natural voice playback.
     [SerializeField] private bool randomizePitch = true;
+
+    // Minimum and maximum pitch used when random pitch is enabled.
     [SerializeField] private Vector2 pitchRange = new Vector2(0.95f, 1.05f);
 
     [Header("Debug")]
+    // Enables debug logs for voice playback and validation warnings.
     [SerializeField] private bool debugLog = false;
 
+    // Cached AudioSource used for all voice playback.
     private AudioSource audioSource;
+
+    // Stores the currently running delayed playback coroutine.
     private Coroutine playVoiceRoutine;
 
     private void Awake()
     {
+        // Cache the AudioSource required by this component.
         audioSource = GetComponent<AudioSource>();
     }
 
     public void PlayVoice(int index)
     {
+        // Stop if no voice entries are assigned.
         if (voiceClips == null || voiceClips.Length == 0)
         {
             if (debugLog)
@@ -113,6 +51,7 @@ public class EnemyVoice : MonoBehaviour
             return;
         }
 
+        // Stop if the requested index is outside the valid range.
         if (index < 0 || index >= voiceClips.Length)
         {
             if (debugLog)
@@ -122,6 +61,7 @@ public class EnemyVoice : MonoBehaviour
 
         VoiceEntry entry = voiceClips[index];
 
+        // Stop if the selected entry or its clip is missing.
         if (entry == null || entry.clip == null)
         {
             if (debugLog)
@@ -129,8 +69,8 @@ public class EnemyVoice : MonoBehaviour
             return;
         }
 
-        // Monophones Verhalten:
-        // neuer Voice-Clip schneidet den alten sofort ab
+        // Monophonic behavior:
+        // a new voice clip immediately interrupts the currently playing one.
         if (playVoiceRoutine != null)
         {
             StopCoroutine(playVoiceRoutine);
@@ -140,42 +80,51 @@ public class EnemyVoice : MonoBehaviour
         if (audioSource.isPlaying)
             audioSource.Stop();
 
+        // Start playback, including optional start delay.
         playVoiceRoutine = StartCoroutine(PlayVoiceRoutine(index, entry));
     }
 
     private IEnumerator PlayVoiceRoutine(int index, VoiceEntry entry)
     {
+        // Wait for the configured start delay before playback.
         if (entry.startDelay > 0f)
             yield return new WaitForSeconds(entry.startDelay);
 
+        // Apply random pitch variation if enabled.
         if (randomizePitch)
             audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
         else
             audioSource.pitch = 1f;
 
+        // Assign the selected clip and start playback.
         audioSource.clip = entry.clip;
         audioSource.Play();
 
         if (debugLog)
             Debug.Log($"{name}: Playing voice index {index}");
 
+        // Clear the routine reference once playback has started.
         playVoiceRoutine = null;
     }
 
     public void StopVoice()
     {
+        // Stop if the AudioSource is not available.
         if (audioSource == null)
             return;
 
+        // Cancel delayed playback if one is waiting to start.
         if (playVoiceRoutine != null)
         {
             StopCoroutine(playVoiceRoutine);
             playVoiceRoutine = null;
         }
 
+        // Stop currently playing voice audio.
         if (audioSource.isPlaying)
             audioSource.Stop();
     }
 
+    // Returns true while a voice clip is currently playing.
     public bool IsPlaying => audioSource != null && audioSource.isPlaying;
 }
